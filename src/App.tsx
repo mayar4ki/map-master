@@ -5,7 +5,6 @@ import { useMemo, useState } from 'react';
 import { MapMaster } from './components/MapMaster';
 import { MapProvider } from './components/MapMaster/enums/MapProvider';
 import { trips as _trips } from './data/trips';
-import { env } from './env';
 import TripBuilder from './utils/trip-builder';
 
 
@@ -62,7 +61,7 @@ export default function App() {
     id: "scene-graph-layer",
     type: ScenegraphLayer,
     data: trips.map(trip => trip.getFrame(animation)),
-    scenegraph: env.MODEL_URL,
+    scenegraph: "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/google-3d/truck.gltf",
     sizeScale: 6,
     getPosition: d => d.point,
     getTranslation: [0, 0, 5],
