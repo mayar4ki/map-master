@@ -31,8 +31,8 @@ export interface MapMasterProps {
 
     defaultPitch?: number;
 
-    center: LatLngLiteral;
+    center?: LatLngLiteral;
 
-    onCenterChanged: (e: LatLngLiteral) => void
+    onCenterChanged?: (e: LatLngLiteral) => void
 
 };
