@@ -16,14 +16,14 @@ const center = {
 
 
 export default function App() {
-
-
   const [selectedMap, setSelectedMap] = useState<MapProvider>(MapProvider.URBI_CANVAS);
-
+  const [animation, setAnimation] = useState(0.02);
   const [shapeLocation, setShapeLocation] = useState({
     lon: 55.31878,
     lat: 25.23584,
   });
+
+  const trips = _trips.map(waypoints => new TripBuilder({ waypoints, loop: true }));
 
 
   const hexagon = useMemo(() => new HexagonLayer({
@@ -40,9 +40,6 @@ export default function App() {
     getPosition: (d: any) => [d.point.lon, d.point.lat],
   }), [shapeLocation, selectedMap])
 
-
-  const trips = _trips.map(waypoints => new TripBuilder({ waypoints, loop: true }));
-
   const path = useMemo(() => new PathLayer({
     id: 'path-layer',
     type: PathLayer,
@@ -53,9 +50,6 @@ export default function App() {
     opacity: 0.5,
     getWidth: 4
   }), [selectedMap]);
-
-
-  const [animation, setAnimation] = useState(0.02);
 
   const car = useMemo(() => new ScenegraphLayer({
     id: "scene-graph-layer",
@@ -79,38 +73,55 @@ export default function App() {
             setSelectedMap(el)
           }}
           style={{
-            backgroundColor: el === selectedMap ? 'green' : 'red'
-
-            , marginRight: 10
+            backgroundColor: el !== selectedMap ? '#ADD8E6' : '#FF7F7F',
+            boxShadow: el === selectedMap ? 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px' : 'none',
+            borderRadius: 5,
+            paddingInline: 16,
+            paddingBlock: 5,
+            marginRight: 10,
+            textTransform: 'uppercase',
+            border: 'none',
+            cursor: 'pointer'
           }}
         >
-          {el}
+          {el.replaceAll("_", " ")}
         </button>)}
 
         <button
-          onClick={() => {
-            // setShapeLocation(el => ({ ...el, lat: el.lat + 0.0001 }));
-
-            let ms = 0;
-
-            while (ms < 5000000) {
-
-              setTimeout(() => {
-
-                setAnimation(i => i + 0.1)
-              }, ms);
-
-              ms = ms + 100
-            }
+          style={{
+            borderRadius: 5,
+            paddingInline: 16,
+            paddingBlock: 5,
+            marginRight: 10,
+            textTransform: 'uppercase',
+            border: 'none',
+            backgroundColor: 'gold',
+            cursor: 'pointer'
 
           }}
+          onClick={() => {
+            let ms = 0;
+            while (ms < 5000000) {
+              setTimeout(() => {
+                setAnimation(i => i + 0.1)
+              }, ms);
+              ms = ms + 100
+            }
+          }}
         >
-          move
+          Play
         </button>
       </div>
 
 
-      <div style={{ borderStyle: 'solid', display: 'flex', flex: 1, height: '650px', margin: 4, marginTop: 20, position: 'relative', overflow: 'hidden' }} >
+      <div style={{
+        display: 'flex', flex: 1,
+        height: '850px', margin: 4,
+        marginTop: 20, position: 'relative',
+        overflow: 'hidden',
+        borderRadius: 10,
+        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'
+      }} >
 
         <MapMaster
           mapProvide={selectedMap}

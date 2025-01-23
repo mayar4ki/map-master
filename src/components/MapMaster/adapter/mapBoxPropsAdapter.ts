@@ -10,12 +10,12 @@ export const mapBoxPropsAdapter = (props: MapMasterProps): MapBoxMapProps => {
             zoom: props.defaultZoom,
             pitch: props.defaultPitch
         },
-        longitude: props.center.lon,
-        latitude: props.center.lat,
+        // longitude: props?.center?.lon,
+        // latitude: props?.center?.lat,
         onMove(e) {
             props?.onCenterChanged?.({
-                lat: e.viewState.latitude,
-                lon: e.viewState.longitude
+                lat: e?.viewState?.latitude,
+                lon: e?.viewState?.longitude
             })
         },
         slotProps: {

@@ -22,7 +22,7 @@ export const MapMaster = (props: MapMasterProps) => {
 
         case MapProvider.GOOGLE_CANVAS:
             return <GoogleMap
-                center={{ lat: 0, lng: 0 }}
+
                 {...googleMapPropsAdapter(props)}
             />
         case MapProvider.MAP_BOX_CANVAS:
